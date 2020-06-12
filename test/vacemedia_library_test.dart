@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:vacemedia_library/vacemedia_library.dart';
+import 'package:vacemedia_library/generic.dart';
 
 void main() {
   test('adds one to input values', () {
