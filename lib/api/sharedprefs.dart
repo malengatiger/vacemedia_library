@@ -1,5 +1,4 @@
-import 'dart:convert';
-d_preferences.dart';
+import 'dart:convert';'package:shared_preferences/shared_preferences.dart';
 import 'package:vacemedia_library/models/broadcaster.dart';
 import 'package:vacemedia_library/models/live_show.dart';
 import 'package:vacemedia_library/models/member.dart';
@@ -50,8 +49,7 @@ class Prefs {
     Map jsonx = member.toJson();
     var jx = json.encode(jsonx);
     prefs.setString('member', jx);
-    print(
-        "🌽 🌽 🌽 Prefs.Member  SAVED: 🌽 ${member.toJson()}");
+    print("🌽 🌽 🌽 Prefs.Member  SAVED: 🌽 ${member.toJson()}");
     return null;
   }
 
@@ -63,8 +61,7 @@ class Prefs {
     }
     var jx = json.decode(string);
     var member = new Member.fromJson(jx);
-    print(
-        "🌽 🌽 🌽 Prefs.getMember 🧩  ${member.toJson()} retrieved");
+    print("🌽 🌽 🌽 Prefs.getMember 🧩  ${member.toJson()} retrieved");
     return member;
   }
 
@@ -74,8 +71,7 @@ class Prefs {
     Map jsonx = channel.toJson();
     var jx = json.encode(jsonx);
     prefs.setString('channel', jx);
-    print(
-        "🌽 🌽 🌽 Prefs.Channel  SAVED: 🌽 ${channel.toJson()}");
+    print("🌽 🌽 🌽 Prefs.Channel  SAVED: 🌽 ${channel.toJson()}");
     return null;
   }
 
@@ -87,8 +83,7 @@ class Prefs {
     }
     var jx = json.decode(string);
     var c = new Channel.fromJson(jx);
-    print(
-        "🌽 🌽 🌽 Prefs.getChannel 🧩  ${c.toJson()} retrieved");
+    print("🌽 🌽 🌽 Prefs.getChannel 🧩  ${c.toJson()} retrieved");
     return c;
   }
 
@@ -128,5 +123,4 @@ class Prefs {
     prefs.setInt("themeIndex", index);
     //prefs.commit();
   }
-
 }
