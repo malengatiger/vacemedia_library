@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 import 'package:vacemedia_library/models/broadcaster.dart';
+import 'package:vacemedia_library/models/live_show.dart';
 import 'package:vacemedia_library/models/member.dart';
-import 'package:vacemedia_library/sharedprefs.dart';
 import 'package:vacemedia_library/util/constants.dart';
 
-import 'generic.dart';
+import '../generic.dart';
+import 'sharedprefs.dart';
 
 class Auth {
   static final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -66,13 +68,25 @@ class Auth {
 
   static Future createBroadcaster(
       {Broadcaster broadcaster, String password}) async {
+    p('️✳️✳️  Auth: createBroadcaster ... ${broadcaster.toJson()}');
     var fbUser = await createUser(email: broadcaster.email, password: password);
     broadcaster.broadcasterId = fbUser.uid;
     var res =
         await firestore.collection('broadcasters').add(broadcaster.toJson());
     p('🍐 🍐 🍐 ${res.path} 🍎 Broadcaster has been added to Firestore');
     Prefs.saveBroadcaster(broadcaster);
-    return null;
+
+    var uuid = Uuid();
+    var channel = Channel(
+      name: 'Default Channel',
+      channelId: uuid.v4(),
+      broadcaster: broadcaster,
+      created: DateTime.now().toUtc().toIso8601String(),
+    );
+    var result = await firestore.collection(CHANNELS).add(channel.toJson());
+    p('🍐 🍐 🍐 ${result.path} 🍎 Broadcaster Default Channel has been added to Firestore');
+    await Prefs.saveChannel(channel);
+    return broadcaster;
   }
 
   static Future createMember({Member member, String password}) async {

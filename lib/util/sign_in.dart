@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vacemedia_library/util/snack.dart';
 
-import '../auth.dart';
+import '../api/auth.dart';
 import 'functions.dart';
 
 class SignIn extends StatefulWidget {
@@ -135,7 +135,7 @@ class _SignInState extends State<SignIn> implements SnackBarListener {
 
   TextEditingController emailCntr = TextEditingController();
   TextEditingController pswdCntr = TextEditingController();
-  String email = 'marshal.ty3@aftarobot.com', password = 'changeThisPassword';
+  String email = '', password = '';
   void _onEmailChanged(String value) {
     email = value;
     print(email);

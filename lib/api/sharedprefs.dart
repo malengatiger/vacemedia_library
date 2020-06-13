@@ -1,9 +1,7 @@
 import 'dart:convert';
-
-
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+d_preferences.dart';
 import 'package:vacemedia_library/models/broadcaster.dart';
+import 'package:vacemedia_library/models/live_show.dart';
 import 'package:vacemedia_library/models/member.dart';
 
 class Prefs {
@@ -68,6 +66,30 @@ class Prefs {
     print(
         "🌽 🌽 🌽 Prefs.getMember 🧩  ${member.toJson()} retrieved");
     return member;
+  }
+
+  static Future saveChannel(Channel channel) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Map jsonx = channel.toJson();
+    var jx = json.encode(jsonx);
+    prefs.setString('channel', jx);
+    print(
+        "🌽 🌽 🌽 Prefs.Channel  SAVED: 🌽 ${channel.toJson()}");
+    return null;
+  }
+
+  static Future<Channel> getChannel() async {
+    var prefs = await SharedPreferences.getInstance();
+    var string = prefs.getString('channel');
+    if (string == null) {
+      return null;
+    }
+    var jx = json.decode(string);
+    var c = new Channel.fromJson(jx);
+    print(
+        "🌽 🌽 🌽 Prefs.getChannel 🧩  ${c.toJson()} retrieved");
+    return c;
   }
 
   static Future saveFCMToken(String token) async {

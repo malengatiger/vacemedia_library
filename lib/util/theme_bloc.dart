@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../sharedprefs.dart';
+import 'package:vacemedia_library/api/sharedprefs.dart';
 
 final ThemeBloc themeBloc = ThemeBloc();
 

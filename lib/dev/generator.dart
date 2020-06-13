@@ -11,6 +11,5 @@ class Generator {
 
   static Future _generateBroadcasters() async {}
   static Future _generateAudience() async {}
-
   static Future _generateLiveShows() async {}
 }

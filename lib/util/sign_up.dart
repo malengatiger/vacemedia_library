@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vacemedia_library/models/broadcaster.dart';
 import 'package:vacemedia_library/util/snack.dart';
 
-import '../auth.dart';
+import '../api/auth.dart';
 import 'functions.dart';
 
 class SignUp extends StatefulWidget {
@@ -28,11 +29,10 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
         key: _key,
         appBar: AppBar(
           title: Text('VaceMedia Platform'),
-          backgroundColor: Colors.brown[400],
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(140),
+            preferredSize: Size.fromHeight(100),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 children: <Widget>[
                   Text(
@@ -54,7 +54,7 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
                   height: 60,
                   width: 60,
                   child: CircularProgressIndicator(
-                    strokeWidth: 24,
+                    strokeWidth: 8,
                     backgroundColor: Colors.teal[800],
                   ),
                 ),
@@ -70,14 +70,14 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
                         child: Column(
                           children: <Widget>[
                             SizedBox(
-                              height: 40,
+                              height: 12,
                             ),
                             Text(
                               'Sign Up',
-                              style: Styles.blackBoldLarge,
+                              style: Styles.greyLabelLarge,
                             ),
                             SizedBox(
-                              height: 40,
+                              height: 12,
                             ),
                             TextField(
                               onChanged: _onNameChanged,
@@ -111,7 +111,7 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
                               ),
                             ),
                             SizedBox(
-                              height: 60,
+                              height: 32,
                             ),
                             RaisedButton(
                               onPressed: _signUp,
@@ -120,13 +120,13 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
                               child: Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: Text(
-                                  'Submit Sign in credentials',
+                                  'Get Registered!',
                                   style: Styles.whiteSmall,
                                 ),
                               ),
                             ),
                             SizedBox(
-                              height: 60,
+                              height: 20,
                             ),
                           ],
                         ),
@@ -148,7 +148,7 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
   TextEditingController emailCntr = TextEditingController();
   TextEditingController pswdCntr = TextEditingController();
   TextEditingController nameCntr = TextEditingController();
-  String email, password, name;
+  String email = '', password = '', name = '';
   void _onEmailChanged(String value) {
     email = value;
     print(email);
@@ -167,8 +167,12 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
       isBusy = true;
     });
     try {
-      await Auth.signIn(email: email, password: password);
-      print('✳️✳️✳️✳️✳️✳️✳️ signed in ok, ✳️ popping .....');
+      var c = Broadcaster(
+          name: name,
+          email: email,
+          created: DateTime.now().toUtc().toIso8601String());
+      await Auth.createBroadcaster(broadcaster: c, password: password);
+      print('✳️✳️✳️✳️✳️✳️✳️ ........ signed in ok, ✳️ popping .....');
       Navigator.pop(context, true);
     } catch (e) {
       print(e);
