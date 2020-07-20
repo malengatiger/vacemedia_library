@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vacemedia_library/models/broadcaster.dart';
 import 'package:vacemedia_library/util/snack.dart';
 
@@ -16,10 +17,31 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> implements SnackBarListener {
   GlobalKey<ScaffoldState> _key = GlobalKey();
   bool isBusy = false;
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void _googleSignUp() async {
+    p('🍐 🍐 🍐 🍐 SignUp: _googleSignUp: Google Account signing up ......');
+    var isSignedIn = await googleSignIn.isSignedIn();
+    if (!isSignedIn) {
+      var account = await googleSignIn.signIn();
+      if (account != null) {
+        p('🌿 🌿 🌿 🌿 Google Account signed in ${account.displayName} ${account.email}');
+      } else {
+        p('👿👿 👿👿 👿👿 Google Account is 👿 NOT signed in');
+      }
+    } else {
+      p('🍐 🍐 🍐 🍐 Google Account already signed in 🌺');
+    }
   }
 
   @override
@@ -120,6 +142,21 @@ class _SignUpState extends State<SignUp> implements SnackBarListener {
                               padding: const EdgeInsets.all(20.0),
                               child: Text(
                                 'Get Registered!',
+                                style: Styles.whiteSmall,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          RaisedButton(
+                            onPressed: _googleSignUp,
+                            color: Colors.blue[700],
+                            elevation: 8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(
+                                'Use Google Account',
                                 style: Styles.whiteSmall,
                               ),
                             ),

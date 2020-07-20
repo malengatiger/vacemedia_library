@@ -1,4 +1,5 @@
 import 'package:vacemedia_library/models/broadcaster.dart';
+import 'package:vacemedia_library/models/member.dart';
 
 class LiveShow {
   String liveShowId, name;
@@ -71,6 +72,37 @@ class Channel {
     map['description'] = description;
     map['created'] = created;
     map['broadcaster'] = broadcaster == null ? null : broadcaster.toJson();
+    return map;
+  }
+}
+
+class LiveShowRegistration {
+  String registrationId;
+  String created;
+  Member member;
+  LiveShow liveShow;
+
+  LiveShowRegistration(
+      {this.registrationId, this.member, this.liveShow, this.created});
+
+  LiveShowRegistration.fromJson(Map data) {
+    this.registrationId = data['registrationId'];
+    this.created = data['created'];
+
+    if (data['member'] != null) {
+      this.member = Member.fromJson(data['member']);
+    }
+    if (data['liveShow'] != null) {
+      this.liveShow = LiveShow.fromJson(data['liveShow']);
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = Map();
+    map['registrationId'] = registrationId;
+    map['created'] = created;
+    map['member'] = member == null ? null : member.toJson();
+    map['liveShow'] = liveShow == null ? null : liveShow.toJson();
     return map;
   }
 }
