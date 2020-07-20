@@ -78,7 +78,7 @@ class Auth {
 
     var uuid = Uuid();
     var channel = Channel(
-      name: 'Default Channel',
+      name: broadcaster.name,
       channelId: uuid.v4(),
       broadcaster: broadcaster,
       created: DateTime.now().toUtc().toIso8601String(),

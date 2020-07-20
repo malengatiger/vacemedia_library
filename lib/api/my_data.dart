@@ -9,7 +9,7 @@ import 'package:vacemedia_library/util/functions.dart';
 class DatabaseAPI {
   static Firestore firestore = Firestore.instance;
 
-  Future<bool> addChannel({Channel channel}) async {
+  static Future<bool> addChannel({Channel channel}) async {
     var uuid = Uuid();
     channel.channelId = uuid.v4();
     var result = await firestore.collection(CHANNELS).add(channel.toJson());
@@ -17,7 +17,7 @@ class DatabaseAPI {
     return true;
   }
 
-  Future<bool> addLiveShow({LiveShow liveShow}) async {
+  static Future<bool> addLiveShow({LiveShow liveShow}) async {
     var uuid = Uuid();
     liveShow.liveShowId = uuid.v4();
     var result = await firestore.collection(LIVESHOWS).add(liveShow.toJson());
@@ -25,11 +25,16 @@ class DatabaseAPI {
     return true;
   }
 
-  Future<List<Channel>> getChannels({String broadcasterId}) async {
-    var qs = await firestore
-        .collection(CHANNELS)
-        .where('broadcasterId', isEqualTo: broadcasterId)
-        .getDocuments();
+  static Future<List<Channel>> getChannels({String broadcasterId}) async {
+    var qs;
+    if (broadcasterId == null) {
+      qs = await firestore.collection(CHANNELS).getDocuments();
+    } else {
+      qs = await firestore
+          .collection(CHANNELS)
+          .where('broadcasterId', isEqualTo: broadcasterId)
+          .getDocuments();
+    }
     List<Channel> list = [];
     qs.documents.forEach((element) {
       var m = Channel.fromJson(element.data);
@@ -38,7 +43,7 @@ class DatabaseAPI {
     return list;
   }
 
-  Future<List<LiveShow>> getLiveShows({String broadcasterId}) async {
+  static Future<List<LiveShow>> getLiveShows({String broadcasterId}) async {
     var qs = await firestore
         .collection(LIVESHOWS)
         .where('broadcasterId', isEqualTo: broadcasterId)

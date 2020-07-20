@@ -22,110 +22,107 @@ class _SignInState extends State<SignIn> implements SnackBarListener {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      child: Scaffold(
-        key: _key,
-        appBar: AppBar(
-          title: Text('VaceMedia Platform'),
-          backgroundColor: Colors.brown[400],
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(140),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    'Welcome! Please use the email address and password that you used to sign up.',
-                    style: Styles.whiteSmall,
-                  ),
-                  SizedBox(
-                    height: 12,
-                  )
-                ],
-              ),
+    return Scaffold(
+      key: _key,
+      appBar: AppBar(
+        title: Text('VaceMedia Platform'),
+        backgroundColor: Colors.brown[400],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(140),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Welcome! Please use the email address and password that you used to sign up.',
+                  style: Styles.whiteSmall,
+                ),
+                SizedBox(
+                  height: 12,
+                )
+              ],
             ),
           ),
         ),
-        backgroundColor: Colors.brown[100],
-        body: isBusy
-            ? Center(
-                child: Container(
-                  height: 60,
-                  width: 60,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 24,
-                    backgroundColor: Colors.teal[800],
-                  ),
+      ),
+      backgroundColor: Colors.brown[100],
+      body: isBusy
+          ? Center(
+              child: Container(
+                height: 60,
+                width: 60,
+                child: CircularProgressIndicator(
+                  strokeWidth: 24,
+                  backgroundColor: Colors.teal[800],
                 ),
-              )
-            : ListView(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Card(
-                      elevation: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: 40,
+              ),
+            )
+          : ListView(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Card(
+                    elevation: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Text(
+                            'Sign in',
+                            style: Styles.blackBoldLarge,
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          TextField(
+                            onChanged: _onEmailChanged,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailCntr,
+                            decoration: InputDecoration(
+                              hintText: 'Enter  email address',
                             ),
-                            Text(
-                              'Sign in',
-                              style: Styles.blackBoldLarge,
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          TextField(
+                            onChanged: _onPasswordChanged,
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            controller: pswdCntr,
+                            decoration: InputDecoration(
+                              hintText: 'Enter password',
                             ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            TextField(
-                              onChanged: _onEmailChanged,
-                              keyboardType: TextInputType.emailAddress,
-                              controller: emailCntr,
-                              decoration: InputDecoration(
-                                hintText: 'Enter  email address',
+                          ),
+                          SizedBox(
+                            height: 60,
+                          ),
+                          RaisedButton(
+                            onPressed: _signIn,
+                            color: Colors.pink[700],
+                            elevation: 8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(
+                                'Submit Sign in credentials',
+                                style: Styles.whiteSmall,
                               ),
                             ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            TextField(
-                              onChanged: _onPasswordChanged,
-                              keyboardType: TextInputType.text,
-                              obscureText: true,
-                              controller: pswdCntr,
-                              decoration: InputDecoration(
-                                hintText: 'Enter password',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 60,
-                            ),
-                            RaisedButton(
-                              onPressed: _signIn,
-                              color: Colors.pink[700],
-                              elevation: 8,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Text(
-                                  'Submit Sign in credentials',
-                                  style: Styles.whiteSmall,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 60,
-                            ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 60,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
-        // ignore: missing_return
-      ),
-      onWillPop: () => doNothing(),
+                ),
+              ],
+            ),
+      // ignore: missing_return
     );
   }
 

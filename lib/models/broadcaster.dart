@@ -1,19 +1,13 @@
 class Broadcaster {
-  String broadcasterId, name, channelId, email;
+  String broadcasterId, name, email;
   String created;
 
-  Broadcaster(
-      {this.broadcasterId,
-      this.name,
-      this.created,
-      this.email,
-      this.channelId});
+  Broadcaster({this.broadcasterId, this.name, this.created, this.email});
 
   Broadcaster.fromJson(Map data) {
     this.broadcasterId = data['broadcasterId'];
     this.name = data['name'];
     this.email = data['email'];
-    this.channelId = data['channelId'];
     this.created = data['created'];
   }
 
@@ -22,7 +16,6 @@ class Broadcaster {
     map['broadcasterId'] = broadcasterId;
     map['name'] = name;
     map['created'] = created;
-    map['channelId'] = channelId;
     map['email'] = email;
 
     return map;

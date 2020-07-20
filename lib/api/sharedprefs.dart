@@ -1,7 +1,10 @@
-import 'dart:convert';'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vacemedia_library/models/broadcaster.dart';
 import 'package:vacemedia_library/models/live_show.dart';
 import 'package:vacemedia_library/models/member.dart';
+import 'package:vacemedia_library/util/functions.dart';
 
 class Prefs {
   static Future saveBroadcaster(Broadcaster broadcaster) async {
@@ -35,6 +38,7 @@ class Prefs {
     var prefs = await SharedPreferences.getInstance();
     var string = prefs.getString('broadcaster');
     if (string == null) {
+      p(' 😡  😡 ... Broadcaster not found in cache');
       return null;
     }
     var jx = json.decode(string);
@@ -57,6 +61,7 @@ class Prefs {
     var prefs = await SharedPreferences.getInstance();
     var string = prefs.getString('member');
     if (string == null) {
+      p(' 😡  😡 ... Member not found in cache');
       return null;
     }
     var jx = json.decode(string);
@@ -71,7 +76,7 @@ class Prefs {
     Map jsonx = channel.toJson();
     var jx = json.encode(jsonx);
     prefs.setString('channel', jx);
-    print("🌽 🌽 🌽 Prefs.Channel  SAVED: 🌽 ${channel.toJson()}");
+    p("🌽 🌽 🌽 Prefs.Channel  SAVED: 🌽 ${channel.toJson()}");
     return null;
   }
 
@@ -79,11 +84,12 @@ class Prefs {
     var prefs = await SharedPreferences.getInstance();
     var string = prefs.getString('channel');
     if (string == null) {
+      p(' 😡  😡 ... Channel not found in cache');
       return null;
     }
     var jx = json.decode(string);
     var c = new Channel.fromJson(jx);
-    print("🌽 🌽 🌽 Prefs.getChannel 🧩  ${c.toJson()} retrieved");
+    p("🌽 🌽 🌽 Prefs.getChannel 🧩  ${c.toJson()} retrieved");
     return c;
   }
 
